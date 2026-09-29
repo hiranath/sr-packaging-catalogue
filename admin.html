@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b3b82">
+<title>SR PACKAGING • Admin Control Center</title>
+<style>
+:root{--navy:#0b3b82;--navy2:#082b60;--gold:#d49a16;--green:#15803d;--red:#b42318;--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e4e7ec;--shadow:0 10px 30px rgba(16,24,40,.07)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topin{max-width:1250px;margin:auto;padding:13px 18px;display:flex;gap:16px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px}.brandmark{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--navy),#1462c4);display:grid;place-items:center;color:#fff;font-weight:950;font-size:19px;box-shadow:0 6px 16px rgba(11,59,130,.25)}
+.brand b{display:block;font-size:17px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:1px}
+.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 12px;font-weight:800}.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}.btn.green{background:#ecfdf3;border-color:#abefc6;color:#067647}.btn.red{color:var(--red);border-color:#fecdca}.btn.dark{background:#101828;color:#fff;border-color:#101828}
+.layout{max-width:1250px;margin:auto;display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 69px)}.side{padding:18px 12px;border-right:1px solid var(--line);background:#fff}
+.nav{width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;border-radius:9px;font-weight:800;color:#475467;margin:2px 0}.nav.active{background:#eef4ff;color:var(--navy)}.nav small{display:block;font-weight:500;color:#98a2b3;margin-top:2px}
+.main{padding:22px 18px 50px}.page{display:none}.page.active{display:block}.title{font-size:24px;font-weight:900;margin:0}.subtitle{color:var(--muted);font-size:13px;margin:4px 0 18px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:var(--shadow)}.stat .n{font-size:25px;font-weight:950;margin-top:5px}.stat .l{font-size:12px;color:var(--muted);font-weight:750}.stat.blue .n{color:var(--navy)}.stat.green .n{color:var(--green)}.stat.gold .n{color:#a15c00}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin-top:14px}.toolbar{display:flex;gap:9px;justify-content:space-between;align-items:center;flex-wrap:wrap}.toolbar .left,.toolbar .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+input,select,textarea{width:100%;border:1px solid #d0d5dd;border-radius:9px;padding:10px 11px;background:#fff;color:var(--ink);outline:none}input:focus,select:focus,textarea:focus{border-color:#84aee8;box-shadow:0 0 0 3px #eff6ff}.search{min-width:260px}.field label{display:block;font-size:11px;font-weight:850;color:#475467;margin:0 0 5px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tablewrap{overflow:auto;margin-top:13px}table{width:100%;border-collapse:collapse;min-width:760px}th,td{border-bottom:1px solid #eef0f3;padding:10px 8px;text-align:left;font-size:13px;vertical-align:middle}th{background:#f8fafc;color:#475467;font-size:11px;text-transform:uppercase;letter-spacing:.04em}td strong{font-weight:900}.pill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:850}.p3{background:#fff3e8;color:#9a4b00}.p5{background:#eef4ff;color:#1d4ed8}.row-actions{white-space:nowrap}.iconbtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 8px;font-weight:800}.iconbtn.red{color:var(--red)}
+.notice{padding:12px 14px;border-radius:10px;background:#fffaeb;border:1px solid #fedf89;color:#7a4a00;font-size:12px;line-height:1.5}.success{background:#ecfdf3;border-color:#abefc6;color:#067647}
+.empty{text-align:center;color:var(--muted);padding:35px}.check{display:flex;gap:8px;align-items:center}.check input{width:auto}
+.modal{position:fixed;inset:0;background:rgba(16,24,40,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:14px}.modal.open{display:flex}.modalbox{width:min(720px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.25)}.modalhead{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modalbody{padding:18px}.modalfoot{padding:13px 18px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}.x{border:0;background:#f2f4f7;border-radius:8px;padding:7px 10px;font-weight:900}
+.help{font-size:12px;color:var(--muted);line-height:1.55}.section-title{font-size:14px;font-weight:900;margin:4px 0 12px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:sticky;top:69px;z-index:10;border-right:0;border-bottom:1px solid var(--line);padding:7px;display:flex;overflow:auto}.nav{white-space:nowrap;width:auto}.nav small{display:none}.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.topin{padding:10px 12px}.top .actions .btn:not(.primary){display:none}.main{padding:15px 10px 35px}.cards{gap:8px}.stat{padding:12px}.grid,.grid2,.grid3{grid-template-columns:1fr}.search{min-width:220px}.title{font-size:21px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+<div class="brand"><div class="brandmark">SR</div><div><b>SR PACKAGING</b><span>Admin Control Center • Catalogue Management</span></div></div>
+<div class="actions"><button class="btn" id="previewBtn">Preview Website</button><button class="btn primary" id="exportBtn">Export Website Data</button></div>
+</div></header>
+
+<div class="layout">
+<aside class="side">
+<button class="nav active" data-page="dashboard">▦ Dashboard<small>Overview</small></button>
+<button class="nav" data-page="products">▤ Products<small>All catalogue items</small></button>
+<button class="nav" data-page="offers">★ Offers<small>Gift slabs</small></button>
+<button class="nav" data-page="settings">⚙ Settings<small>Business rules</small></button>
+<button class="nav" data-page="backup">⇩ Backup & Publish<small>Files</small></button>
+</aside>
+
+<main class="main">
+<section id="dashboard" class="page active">
+<h1 class="title">Dashboard</h1><p class="subtitle">Complete catalogue control center. Products, pricing, offers and business rules.</p>
+<div class="cards">
+<div class="stat blue"><div class="l">TOTAL PRODUCTS</div><div class="n" id="sProducts">0</div></div>
+<div class="stat green"><div class="l">3 PLY PRODUCTS</div><div class="n" id="s3">0</div></div>
+<div class="stat gold"><div class="l">5 PLY PRODUCTS</div><div class="n" id="s5">0</div></div>
+<div class="stat"><div class="l">OFFER TIERS</div><div class="n" id="sOffers">0</div></div>
+</div>
+<div class="panel"><div class="toolbar"><div><div class="section-title">Quick actions</div><div class="help">Common catalogue management tasks.</div></div>
+<div class="actions"><button class="btn primary" onclick="go('products');openProduct()">+ Add Product</button><button class="btn" onclick="go('offers');openOffer()">+ Add Offer</button><button class="btn" onclick="go('settings')">Edit Settings</button></div></div></div>
+<div class="panel"><div class="section-title">Data status</div><div class="notice success" id="statusBox"></div></div>
+</section>
+
+<section id="products" class="page">
+<h1 class="title">Products & Pricing</h1><p class="subtitle">Size, price and ply manage karein. Quick price editing, duplicate, delete aur search included.</p>
+<div class="panel">
+<div class="toolbar"><div class="left"><input id="search" class="search" placeholder="Search size, price or ply..."><select id="plyFilter" style="width:130px"><option value="0">All Ply</option><option value="3">3 Ply</option><option value="5">5 Ply</option></select></div>
+<div class="right"><button class="btn" id="sortBtn">Sort by Size ↑</button><button class="btn primary" onclick="openProduct()">+ Add Product</button></div></div>
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Box Size</th><th>Price / Pc</th><th>Ply</th><th>Quick Price</th><th>Actions</th></tr></thead><tbody id="productRows"></tbody></table></div>
+</div>
+</section>
+
+<section id="offers" class="page">
+<h1 class="title">Offers & Benefits</h1><p class="subtitle">Quantity slabs aur promotional benefits ko manage karein.</p>
+<div class="panel"><div class="toolbar"><div class="help">Customer quantity ke basis par website applicable benefit tier automatically show karegi.</div><button class="btn primary" onclick="openOffer()">+ Add Offer Tier</button></div>
+<div class="tablewrap"><table><thead><tr><th>Minimum Qty</th><th>Stickers</th><th>Mug</th><th>T-Shirt</th><th>Key Chain</th><th>Premium</th><th>Actions</th></tr></thead><tbody id="offerRows"></tbody></table></div></div>
+</section>
+
+<section id="settings" class="page">
+<h1 class="title">Website & Business Settings</h1><p class="subtitle">Important business rules aur website settings yahin se control karein.</p>
+<div class="panel"><div class="section-title">Brand & Website</div><div class="grid2">
+<div class="field"><label>Brand Name</label><input id="setBrand"></div>
+<div class="field"><label>Website Page Title</label><input id="setTitle"></div>
+<div class="field"><label>WhatsApp Number (country code)</label><input id="setWA" placeholder="919004200283"></div>
+<div class="field"><label>Currency Symbol</label><input id="setCurrency"></div>
+</div></div>
+<div class="panel"><div class="section-title">Order Rules & Pricing</div><div class="grid3">
+<div class="field"><label>Minimum Order Quantity</label><input id="setMOQ" type="number" min="1"></div>
+<div class="field"><label>GST %</label><input id="setGST" type="number" min="0" step=".01"></div>
+<div class="field"><label>Custom Estimate Ply</label><select id="setEstimatePly"><option value="3">3 Ply</option><option value="5">5 Ply</option></select></div>
+</div>
+<div class="grid2" style="margin-top:12px"><label class="check"><input id="setEstimate" type="checkbox"> Enable custom-size estimated price</label><label class="check"><input id="setOffers" type="checkbox"> Enable promotional offers</label></div>
+<div class="field" style="margin-top:12px"><label>Shipping Message</label><textarea id="setShipping" rows="3"></textarea></div>
+<div style="margin-top:12px"><button class="btn primary" id="saveSettings">Save Settings</button></div>
+</div>
+<div class="panel"><div class="notice">Security: static HTML mein GitHub token/password rakhna safe nahi hai. Publishing ke liye exported data file use karein.</div></div>
+</section>
+
+<section id="backup" class="page">
+<h1 class="title">Backup & Publish</h1><p class="subtitle">Safe backup aur GitHub-ready website data export.</p>
+<div class="panel"><div class="section-title">Backup</div><div class="help">Current admin data ka complete JSON backup.</div><div class="actions" style="margin-top:10px"><button class="btn" id="backupBtn">Download JSON Backup</button><button class="btn" id="importBtn">Import JSON Backup</button><input type="file" id="fileInput" accept=".json" hidden></div></div>
+<div class="panel"><div class="section-title">Publish-ready data</div><div class="help">Exported file ko GitHub mein <b>catalogue-data.js</b> ke naam se replace karein.</div><div class="actions" style="margin-top:10px"><button class="btn primary" id="exportBtn2">Download catalogue-data.js</button></div></div>
+<div class="panel"><div class="notice"><b>Recommended:</b> Edit → Save → Backup → Export → GitHub replace → Website check.</div></div>
+</section>
+</main></div>
+
+<div class="modal" id="modal"><div class="modalbox"><div class="modalhead"><b id="modalTitle">Edit</b><button class="x" id="closeModal">×</button></div><div class="modalbody" id="modalBody"></div><div class="modalfoot"><button class="btn" id="cancelModal">Cancel</button><button class="btn primary" id="saveModal">Save Changes</button></div></div></div>
+
+<script>
+const CATALOG_DATA = {"settings": {"brand": "SR PACKAGING", "siteTitle": "SR Packaging – Box Price Finder", "whatsapp": "919004200283", "gstRate": 5, "minimumOrderQty": 100, "currency": "₹", "defaultPly": 0, "estimatePly": 3, "customEstimateEnabled": true, "offerEnabled": true, "shippingText": "To be confirmed on WhatsApp based on delivery pincode, quantity and shipment details."}, "boxes": [["5 x 4 x 4", 6.3, 3], ["8 x 4 x 4", 7.25, 3], ["8 x 5 x 4", 8.1, 3], ["7 x 4 x 2", 6.0, 3], ["9 x 4 x 3", 7.0, 3], ["9 x 3 x 3", 6.2, 3], ["8 x 4 x 2", 6.2, 3], ["6 x 5 x 2", 6.5, 3], ["9 x 2 x 9", 8.4, 3], ["12 x 4 x 3", 7.8, 3], ["8 x 5 x 2.5", 7.25, 3], ["7 x 4 x 3.5", 6.65, 3], ["7 x 5 x 3.5", 7.5, 3], ["7 x 5 x 2.5", 7.0, 3], ["7 x 4 x 2.5", 6.2, 3], ["9 x 6 x 4.5", 9.8, 3], ["4 x 2 x 10", 7.2, 3], ["4 x 2 x 12", 7.8, 3], ["4 x 2 x 14", 8.4, 3], ["4 x 2 x 18", 9.6, 3], ["9 x 4.5 x 2.5", 7.1, 3], ["10 x 4.5 x 4", 8.4, 3], ["5.5 x 5 x 3.5", 7.0, 3], ["4.5 x 4.5 x 2", 5.8, 3], ["4.75 x 4.75 x 2.5", 6.15, 3], ["7.5 x 1.5 x 9.5", 9.5, 3], ["4.5 x 1.5 x 4.5", 5.5, 3], ["4.5 x 1.5 x 6", 6.0, 3], ["5 x 4 x 9.5", 15.6, 5], ["3.5 x 3.5 x 5", 7.5, 5], ["2.5 x 2.5 x 24", 10.5, 3], ["3.25 x 3.25 x 17.25", 10.5, 3], ["4 x 2.5 x 18", 10.4, 3], ["5.5 x 5.5 x 6", 11.3, 5], ["6 x 3.5 x 15", 14.5, 5], ["6.5 x 4.5 x 25", 17.3, 3], ["7 x 7 x 7", 11.5, 3], ["8 x 4 x 4", 9.1, 5], ["8 x 4 x 8", 9.4, 3], ["8 x 5 x 2.5", 7.6, 3], ["8.5 x 6.5 x 3", 9.25, 3], ["9 x 4 x 2", 6.6, 3], ["9 x 6.5 x 2.5", 9.0, 3], ["9 x 4.5 x 2.5", 7.2, 3], ["9 x 3 x 9", 9.35, 3], ["9 x 9 x 8", 16.1, 3], ["9 x 5.5 x 9", 12.1, 3], ["9 x 3 x 9", 12.8, 5], ["9.5 x 5 x 9.5", 16.1, 5], ["10 x 2 x 10", 10.75, 3], ["10 x 2 x 12", 11.85, 3], ["11 x 1.75 x 14.25", 12.0, 3], ["11 x 7.5 x 8.5", 21.0, 3], ["12 x 6 x 12", 16.8, 3], ["12 x 7 x 18", 22.0, 3], ["12.5 x 12.5 x 7", 31.0, 5], ["12 x 5 x 22", 31.0, 5], ["13 x 6 x 9", 20.5, 5], ["14 x 10.25 x 13", 37.0, 5], ["7.5 x 4 x 35", 32.0, 5], ["11 x 1.5 x 11", 14.1, 5], ["16 x 6 x 7", 21.0, 5], ["3.5 x 3.5 x 3.5", 5.5, 3], ["4 x 4 x 3", 5.75, 3], ["4 x 4 x 4", 6.25, 3], ["4.5 x 4.5 x 2", 5.5, 3], ["5 x 4 x 2.5", 5.75, 3], ["5 x 4 x 3.5", 6.25, 3], ["5 x 5 x 5", 7.5, 3], ["6 x 6 x 6", 9.25, 3], ["6 x 6 x 3", 7.75, 3], ["6 x 3 x 3", 6.0, 3], ["6 x 5 x 2", 6.5, 3], ["6 x 4 x 4", 6.5, 3], ["7 x 7 x 7", 11.5, 3], ["7 x 4 x 2", 6.0, 3], ["7 x 4 x 3.5", 6.5, 3], ["7 x 5.25 x 4.25", 8.25, 3], ["7.5 x 4.5 x 3.5", 7.25, 3], ["8 x 8 x 3", 11.0, 3], ["8 x 5 x 3.5", 8.0, 3], ["8 x 5 x 2", 7.0, 3], ["8 x 4 x 4", 7.25, 3], ["8 x 4 x 8", 9.5, 3], ["9 x 7.5 x 4.5", 11.5, 3], ["9 x 6 x 3", 8.5, 3], ["9 x 3 x 3", 6.5, 3], ["9 x 6 x 6", 11.0, 3], ["9 x 4 x 2", 6.5, 3], ["9 x 6 x 4.5", 10.5, 3], ["10 x 4.5 x 3.5", 8.0, 3], ["11 x 6 x 5", 11.0, 3], ["12 x 4 x 3", 8.0, 3], ["12 x 10 x 8", 20.0, 3], ["12 x 8 x 4", 13.5, 3], ["12 x 8 x 8", 16.5, 3], ["12 x 2 x 12", 13.0, 3], ["12 x 11 x 6", 19.0, 3], ["14 x 10 x 4", 17.0, 3], ["15 x 11 x 9", 24.0, 3], ["4 x 4 x 1.5", 5.75, 3], ["4 x 2.5 x 1.5", 5.4, 3], ["4 x 4 x 2", 6.5, 3], ["4.5 x 3 x 1", 4.75, 3], ["5 x 5 x 2", 7.5, 3], ["6 x 4 x 2", 7.0, 3], ["6 x 5 x 1.5", 7.0, 3], ["7 x 5.5 x 2", 8.0, 3], ["7 x 7 x 2", 8.5, 3], ["8 x 4 x 2", 7.75, 3], ["10 x 7 x 3.5", 16.0, 3], ["13 x 9 x 2", 14.0, 3], ["14 x 13 x 2.5", 21.0, 3], ["14 x 9 x 3", 20.0, 3]], "offers": [{"min": 500, "stickers": "160 pcs", "mug": "—", "tshirt": "—", "keychain": "—"}, {"min": 1000, "stickers": "320 pcs", "mug": "—", "tshirt": "—", "keychain": "—"}, {"min": 2500, "stickers": "520 pcs", "mug": "—", "tshirt": "—", "keychain": "—"}, {"min": 5000, "stickers": "1,000 pcs", "mug": "1", "tshirt": "—", "keychain": "—"}, {"min": 7500, "stickers": "2,000 pcs", "mug": "2", "tshirt": "2", "keychain": "—"}, {"min": 10000, "stickers": "3,000 pcs", "mug": "5", "tshirt": "5", "keychain": "—"}, {"min": 15000, "stickers": "4,000 pcs", "mug": "5", "tshirt": "5", "keychain": "100", "top": true}]};
+let data=structuredClone(CATALOG_DATA);
+let sortAsc=true;
+const $=id=>document.getElementById(id);
+
+function save(){localStorage.setItem("sr_packaging_admin_v2",JSON.stringify(data))}
+function load(){try{const x=JSON.parse(localStorage.getItem("sr_packaging_admin_v2"));if(x?.boxes&&x?.offers&&x?.settings)data=x}catch(e){}}
+load();
+
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(page).classList.add("active");document.querySelectorAll(".nav").forEach(x=>x.classList.toggle("active",x.dataset.page===page));renderAll()}
+document.querySelectorAll(".nav").forEach(b=>b.onclick=()=>go(b.dataset.page));
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function money(n){return (data.settings.currency||"₹")+Number(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+function renderDashboard(){
+ $("sProducts").textContent=data.boxes.length;
+ $("s3").textContent=data.boxes.filter(x=>Number(x[2])===3).length;
+ $("s5").textContent=data.boxes.filter(x=>Number(x[2])===5).length;
+ $("sOffers").textContent=data.offers.length;
+ $("statusBox").innerHTML=`All <b>${data.boxes.length}</b> products are loaded. Changes save in this browser until exported.`;
+}
+function renderProducts(){
+ let arr=data.boxes.map((x,i)=>({x,i}));
+ const q=$("search").value.trim().toLowerCase(),pf=Number($("plyFilter").value);
+ if(q)arr=arr.filter(({x})=>`${x[0]} ${x[1]} ${x[2]}`.toLowerCase().includes(q));
+ if(pf)arr=arr.filter(({x})=>Number(x[2])===pf);
+ arr.sort((a,b)=>sortAsc?a.x[0].localeCompare(b.x[0],undefined,{numeric:true}):b.x[0].localeCompare(a.x[0],undefined,{numeric:true}));
+ $("productRows").innerHTML=arr.map(({x,i})=>`<tr><td>${i+1}</td><td><strong>${esc(x[0])}</strong></td><td><strong>${money(x[1])}</strong></td><td><span class="pill ${x[2]==5?"p5":"p3"}">${x[2]} Ply</span></td><td><input style="width:105px;padding:7px" type="number" step=".01" value="${x[1]}" onchange="quickPrice(${i},this.value)"></td><td class="row-actions"><button class="iconbtn" onclick="openProduct(${i})">Edit</button> <button class="iconbtn" onclick="duplicateProduct(${i})">Duplicate</button> <button class="iconbtn red" onclick="deleteProduct(${i})">Delete</button></td></tr>`).join("")||`<tr><td colspan="6" class="empty">No products found.</td></tr>`;
+}
+function renderOffers(){
+ $("offerRows").innerHTML=data.offers.map((x,i)=>`<tr><td><strong>${Number(x.min).toLocaleString("en-IN")}+</strong></td><td>${esc(x.stickers)}</td><td>${esc(x.mug)}</td><td>${esc(x.tshirt)}</td><td>${esc(x.keychain)}</td><td>${x.top?"Yes":"No"}</td><td><button class="iconbtn" onclick="openOffer(${i})">Edit</button> <button class="iconbtn red" onclick="deleteOffer(${i})">Delete</button></td></tr>`).join("");
+}
+function renderSettings(){
+ const s=data.settings;
+ $("setBrand").value=s.brand||"";$("setTitle").value=s.siteTitle||"";$("setWA").value=s.whatsapp||"";$("setCurrency").value=s.currency||"₹";
+ $("setMOQ").value=s.minimumOrderQty??100;$("setGST").value=s.gstRate??5;$("setEstimatePly").value=s.estimatePly??3;
+ $("setEstimate").checked=s.customEstimateEnabled!==false;$("setOffers").checked=s.offerEnabled!==false;$("setShipping").value=s.shippingText||"";
+}
+function renderAll(){renderDashboard();renderProducts();renderOffers();renderSettings()}
+
+window.quickPrice=function(i,v){const n=Number(v);if(!Number.isFinite(n)||n<0){alert("Invalid price.");renderProducts();return}data.boxes[i][1]=n;save();renderDashboard()}
+window.deleteProduct=function(i){if(confirm(`Delete product "${data.boxes[i][0]}"?`)){data.boxes.splice(i,1);save();renderAll()}}
+window.duplicateProduct=function(i){data.boxes.splice(i+1,0,[...data.boxes[i]]);save();renderAll()}
+
+function showModal(title,body,onSave){$("modalTitle").textContent=title;$("modalBody").innerHTML=body;$("modal").classList.add("open");$("saveModal").onclick=()=>{if(onSave()){save();$("modal").classList.remove("open");renderAll()}}}
+function closeModal(){$("modal").classList.remove("open")}
+$("closeModal").onclick=closeModal;$("cancelModal").onclick=closeModal;$("modal").onclick=e=>{if(e.target===$("modal"))closeModal()}
+
+window.openProduct=function(i=null){
+ const editing=i!==null,x=editing?data.boxes[i]:["",0,3];
+ showModal(editing?"Edit Product":"Add Product",`<div class="grid2"><div class="field"><label>Box Size (L × W × H)</label><input id="mSize" value="${esc(x[0])}" placeholder="12 x 9 x 3"></div><div class="field"><label>Price per Piece</label><input id="mPrice" type="number" step=".01" value="${x[1]}"></div><div class="field"><label>Ply</label><select id="mPly"><option value="3" ${x[2]==3?"selected":""}>3 Ply</option><option value="5" ${x[2]==5?"selected":""}>5 Ply</option></select></div></div><div class="notice" style="margin-top:12px">Size format: <b>12 x 9 x 3</b></div>`,()=>{
+   const s=$("mSize").value.trim().replace(/\s*[×X]\s*/g," x "),p=Number($("mPrice").value),ply=Number($("mPly").value);
+   if(!/^\d+(\.\d+)?\s*x\s*\d+(\.\d+)?\s*x\s*\d+(\.\d+)?$/i.test(s)||!Number.isFinite(p)||p<0||![3,5].includes(ply)){alert("Please enter valid size, price and ply.");return false}
+   if(editing)data.boxes[i]=[s,p,ply];else data.boxes.push([s,p,ply]);return true;
+ });
+}
+window.openOffer=function(i=null){
+ const editing=i!==null,x=editing?data.offers[i]:{min:500,stickers:"",mug:"—",tshirt:"—",keychain:"—",top:false};
+ showModal(editing?"Edit Offer Tier":"Add Offer Tier",`<div class="grid2"><div class="field"><label>Minimum Quantity</label><input id="oMin" type="number" value="${x.min}"></div><div class="field"><label>Custom Stickers</label><input id="oSt" value="${esc(x.stickers)}"></div><div class="field"><label>Mug</label><input id="oMug" value="${esc(x.mug)}"></div><div class="field"><label>T-Shirt</label><input id="oTs" value="${esc(x.tshirt)}"></div><div class="field"><label>Key Chain</label><input id="oKey" value="${esc(x.keychain)}"></div><label class="check"><input id="oTop" type="checkbox" ${x.top?"checked":""}> Mark as Premium Tier</label></div>`,()=>{
+   const min=Number($("oMin").value);if(!min){alert("Minimum quantity is required.");return false}
+   const obj={min,stickers:$("oSt").value.trim()||"—",mug:$("oMug").value.trim()||"—",tshirt:$("oTs").value.trim()||"—",keychain:$("oKey").value.trim()||"—"};if($("oTop").checked)obj.top=true;
+   if(editing)data.offers[i]=obj;else data.offers.push(obj);data.offers.sort((a,b)=>a.min-b.min);return true;
+ });
+}
+window.deleteOffer=function(i){if(confirm("Delete this offer tier?")){data.offers.splice(i,1);save();renderAll()}}
+
+$("search").oninput=renderProducts;$("plyFilter").onchange=renderProducts;
+$("sortBtn").onclick=()=>{sortAsc=!sortAsc;$("sortBtn").textContent=sortAsc?"Sort by Size ↑":"Sort by Size ↓";renderProducts()}
+
+$("saveSettings").onclick=()=>{
+ data.settings.brand=$("setBrand").value.trim();data.settings.siteTitle=$("setTitle").value.trim();data.settings.whatsapp=$("setWA").value.replace(/\D/g,"");
+ data.settings.currency=$("setCurrency").value||"₹";data.settings.minimumOrderQty=Math.max(1,Number($("setMOQ").value)||100);
+ data.settings.gstRate=Math.max(0,Number($("setGST").value)||0);data.settings.estimatePly=Number($("setEstimatePly").value);
+ data.settings.customEstimateEnabled=$("setEstimate").checked;data.settings.offerEnabled=$("setOffers").checked;data.settings.shippingText=$("setShipping").value.trim();
+ save();renderAll();alert("Settings saved successfully.");
+};
+
+function download(name,text,type){const a=document.createElement("a"),blob=new Blob([text],{type});a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function exportJS(){download("catalogue-data.js","/* SR Packaging catalogue data — generated by Admin Control Center */\nconst CATALOG_DATA = "+JSON.stringify(data,null,2)+";\n","application/javascript")}
+function backup(){download("sr-packaging-admin-backup.json",JSON.stringify(data,null,2),"application/json")}
+$("exportBtn").onclick=exportJS;$("exportBtn2").onclick=exportJS;$("backupBtn").onclick=backup;
+$("importBtn").onclick=()=>$("fileInput").click();
+$("fileInput").onchange=async e=>{try{const x=JSON.parse(await e.target.files[0].text());if(!x.boxes||!x.offers||!x.settings)throw 0;data=x;save();renderAll();alert("Backup imported successfully.")}catch(err){alert("Invalid backup file.")}e.target.value=""};
+$("previewBtn").onclick=()=>alert("Public website file: index.html. After publishing, open your website URL to preview.");
+renderAll();
+</script>
+</body>
+</html>
